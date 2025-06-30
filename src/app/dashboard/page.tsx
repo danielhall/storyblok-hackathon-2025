@@ -1,6 +1,3 @@
-import { getStoryblokApi } from '@/lib/storyblok';
-import { StoryblokStory } from '@storyblok/react/rsc';
-
 import { fetchStoryCardTree, StoryCard } from '@/lib/storyblok/fetch-client';
 
 export default async function Dashboard() {
