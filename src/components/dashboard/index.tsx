@@ -9,11 +9,9 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { CustomNode, SmartTrunkEdge } from './components';
-import { draftMode } from 'next/headers';
 
-const { isEnabled } = await draftMode();
 
-const storyData = await computeSpaceIA(isEnabled);
+const storyData = await computeSpaceIA(true);
 const data = storyData[4];
 
 export function Dashboard() {
