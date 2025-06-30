@@ -1,11 +1,14 @@
-import { fetchStoryCardTree, StoryCard } from '@/lib/storyblok/fetch-client';
+
+import Tag from '@/components/tag';
 
 export default async function Dashboard() {
-	const storyData = await fetchStoryCardTree();
-
 	return (
 		<div className="page">
 			<h1>Dashboard</h1>
+			<Tag tag="example-tag" />
+			<Tag tag="example-tag-2" />
+			<Tag tag="example-tag-2" />
+			<Tag tag="example-tag-3" />
 		</div>
 	);
 }

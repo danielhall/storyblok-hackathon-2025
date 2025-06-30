@@ -5,14 +5,32 @@ import { codenameToString } from "@/lib/utils/string-utils";
 export interface StoryCard {
   id?: string; // Optional ID for each story
   name: string;
+  slug: string;
   storyType: string;
   children: StoryCard[];
 }
 
 // Helper to build a tree of StoryCard objects, inferring folders from slug hierarchy and inserting missing folders
-const buildStoryCardTree = (stories: any[]): StoryCard[] => {
+interface StoryblokStory {
+  id?: string | number;
+  name?: string;
+  slug?: string;
+  full_slug?: string;
+  storyType?: string;
+  isFolder?: boolean;
+  is_startpage?: boolean;
+  content?: {
+    component?: string;
+    body?: StoryblokStory[];
+    columns?: StoryblokStory[];
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
+const buildStoryCardTree = (stories: StoryblokStory[]): StoryCard[] => {
   // Map slug to story for quick lookup
-  const slugToStory = new Map<string, any>();
+  const slugToStory = new Map<string, StoryblokStory>();
   stories.forEach((story) => {
     if (story.full_slug) slugToStory.set(story.full_slug, story);
   });
@@ -69,12 +87,13 @@ const buildStoryCardTree = (stories: any[]): StoryCard[] => {
       const name = node.is_startpage
         ? "Index"
         : node.name || node.full_slug || node.slug || "(no name)";
-      const id = node.id.toString();
+      const id = node.id !== undefined ? node.id.toString() : "";
+      const slug = node.full_slug || node.slug || "";
       const storyType = isFolder
         ? "Folder"
         : codenameToString(node.content?.component || "unknown");
-      const children = buildTree(node.full_slug || node.slug);
-      return { id, name, storyType, children };
+      const children = buildTree(node.full_slug || node.slug || "");
+      return { id, name, slug, storyType, children };
     });
   };
 
@@ -83,10 +102,10 @@ const buildStoryCardTree = (stories: any[]): StoryCard[] => {
 };
 
 // Fetches a tree of StoryCard objects with nested children based on parent/child relationship
-export const fetchStoryCardTree = async (): Promise<StoryCard[]> => {
+export const fetchStoryCardTree = async (useDraft: boolean): Promise<StoryCard[]> => {
   const storyblokApi = getStoryblokApi();
   const { data } = await storyblokApi.get("cdn/stories", {
-    version: "draft",
+    version: useDraft ? "draft" : "published",
     per_page: 100,
   });
   // Build tree based on slug hierarchy (root is empty string)
@@ -94,15 +113,15 @@ export const fetchStoryCardTree = async (): Promise<StoryCard[]> => {
 };
 
 // Flattens all stories to a unique set of story types
-export const fetchUniqueStoryTypes = async (): Promise<string[]> => {
+export const fetchUniqueStoryTypes = async (useDraft: boolean): Promise<string[]> => {
   const storyblokApi = getStoryblokApi();
   const { data } = await storyblokApi.get("cdn/stories", {
-    version: "draft",
+    version: useDraft ? "draft" : "published",
     per_page: 100,
   });
   const types = new Set<string>();
   // Recursively collect all unique story types from all stories
-  const collectTypes = (story: any) => {
+  const collectTypes = (story: StoryblokStory) => {
     if (story.content?.component) {
       types.add(story.content.component);
     }
