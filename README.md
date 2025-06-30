@@ -1,68 +1,67 @@
-# Storyblok Next.js Starter Kit
+# Storyblok Information Architecture Dashboard
 
-A modern starter kit for building content-driven websites with [Next.js](https://nextjs.org/) and [Storyblok](https://www.storyblok.com/).
+This project is a live Information Architecture (IA) dashboard and diagram for any given Storyblok space. It visualises your content structure, folders, and relationships in real time, providing a clear, interactive map of your Storyblok space.
 
-## Features
-
-- Next.js 15 App Router
-- Storyblok Visual Editor integration
-- TypeScript support
-- Dynamic component rendering from Storyblok
-- Tailwind CSS (via PostCSS)
-- Environment-based configuration
+## Storyblok Hackathon 2025
+Created by Daniel Hall and Ben Haynes for the Storyblok Hackathon 2025.
 
 ## Getting Started
 
-### 1. Install Dependencies
+### 1. Set Environment Variables
 
-```sh
+Before running the project, you must set the following environment variables in a `.env` file at the root of the project:
+
+- `NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN`: Your Storyblok preview API token (for reading draft content)
+- `STORYBLOK_SPACE_ID`: Your Storyblok space ID (numeric)
+- `STORYBLOK_PAT`: Your Storyblok Personal Access Token (for management API requests)
+
+Example `.env`:
+
+```
+NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=your_preview_token_here
+STORYBLOK_SPACE_ID=123456
+STORYBLOK_PAT=your_personal_access_token_here
+```
+
+### 2. Point the Dashboard to Your Storyblok Space
+
+When you visit the homepage, enter your Storyblok Preview Token and Space ID in the form. The dashboard will then visualise the IA for your space.
+
+## Running the Project
+
+Install dependencies and start the development server:
+
+```
 pnpm install
-# or
-yarn install
-# or
-npm install
-```
-
-### 2. Configure Environment Variables
-
-Copy `.env` or `.env.local` and set your Storyblok API credentials:
-
-```
-NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=your_preview_token
-STORYBLOK_SPACE_ID=your_space_id
-```
-
-You can find your API token and space ID in your Storyblok space settings.
-
-### 3. Run the Development Server
-
-```sh
 pnpm dev
-# or
-yarn dev
-# or
-npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+This project is not affiliated with Storyblok. Built for the 2025 Hackathon by Daniel Hall and Ben Haynes.
 
 ## Project Structure
 
 ```
 src/
-  app/                # Next.js app directory (entry, layout, pages)
-  components/         # React components mapped to Storyblok blocks
+  app/                  # Next.js app directory (entry, layout, pages, dashboard)
+  components/           # React components (including dashboard visualisation components)
   lib/
-    storyblok.ts      # Storyblok API and component registration
-    types/            # Generated Storyblok component types
-public/               # Static assets
+    services/           # Service classes for Storyblok data, IA orchestration, and components
+    storyblok.ts        # Storyblok API and component registration
+    utils/              # Utility functions (e.g. string formatting)
+    storyblok/
+      types/            # Generated Storyblok component types
+      ...               # Storyblok-related helpers and config
+public/                 # Static assets (SVGs, images, etc.)
 ```
 
 ## Storyblok Integration
 
 - Components are registered in `src/lib/storyblok.ts`.
 - Types for Storyblok blocks are generated in `src/lib/storyblok/types/storyblok-components.d.ts`.
-- The `StoryblokProvider` initializes the API and enables the Visual Editor.
+- The `StoryblokProvider` initialises the API and enables the Visual Editor.
 
 ## Scripts
 
