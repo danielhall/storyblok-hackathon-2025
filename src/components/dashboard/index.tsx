@@ -1,6 +1,6 @@
 'use client';
 
-import { fetchStoryCardTree } from '@/lib/storyblok/fetch-client';
+import { fetchStoryCardTree } from '@/lib/services/story-service';
 import {
     Background,
     Controls,

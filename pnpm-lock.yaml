@@ -35,6 +35,9 @@ importers:
       scule:
         specifier: ^1.3.0
         version: 1.3.0
+      storyblok-js-client:
+        specifier: ^7.0.2
+        version: 7.0.2
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3

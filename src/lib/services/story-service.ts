@@ -8,6 +8,8 @@ export interface StoryCard {
   name: string;
   slug: string;
   storyType: string;
+  storyTypeCodeName: string;
+  allowedBlocks?: string[]; // Optional list of allowed blocks for this story
   children: StoryCard[];
 }
 
@@ -93,8 +95,11 @@ const buildStoryCardTree = (stories: StoryblokStory[]): StoryCard[] => {
       const storyType = isFolder
         ? "Folder"
         : codenameToString(node.content?.component || "unknown");
+      const storyTypeCodeName = isFolder
+        ? "folder"
+        : node.content?.component || "unknown";
       const children = buildTree(node.full_slug || node.slug || "");
-      return { id, name, slug, storyType, children };
+      return { id, name, slug, storyType, storyTypeCodeName, children };
     });
   };
 
