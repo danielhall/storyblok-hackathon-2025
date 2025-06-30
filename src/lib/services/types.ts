@@ -12,6 +12,7 @@ export interface StoryCard {
   slug: string;
   storyType: string;
   storyTypeCodeName: string;
+  redirects?: string[];
   allowedBlocks?: string[];
   children: StoryCard[];
 }
