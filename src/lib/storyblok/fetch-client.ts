@@ -1,6 +1,7 @@
 import { getStoryblokApi } from "@/lib/storyblok";
 
 import { codenameToString } from "@/lib/utils/string-utils";
+import { StoryblokClient } from "@storyblok/react";
 
 export interface StoryCard {
   id?: string; // Optional ID for each story
@@ -101,24 +102,37 @@ const buildStoryCardTree = (stories: StoryblokStory[]): StoryCard[] => {
   return buildTree("");
 };
 
+// Helper to fetch all stories with pagination
+async function fetchAllStories(storyblokApi: StoryblokClient, useDraft: boolean): Promise<StoryblokStory[]> {
+  let page = 1;
+  const perPage = 100;
+  let allStories: StoryblokStory[] = [];
+  let total = 0;
+  do {
+    const { data } = await storyblokApi.get("cdn/stories", {
+      version: useDraft ? "draft" : "published",
+      per_page: perPage,
+      page,
+    });
+    allStories = allStories.concat(data.stories);
+    total = data.total || allStories.length;
+    page++;
+  } while (allStories.length < total);
+  return allStories;
+}
+
 // Fetches a tree of StoryCard objects with nested children based on parent/child relationship
 export const fetchStoryCardTree = async (useDraft: boolean): Promise<StoryCard[]> => {
   const storyblokApi = getStoryblokApi();
-  const { data } = await storyblokApi.get("cdn/stories", {
-    version: useDraft ? "draft" : "published",
-    per_page: 100,
-  });
+  const stories = await fetchAllStories(storyblokApi, useDraft);
   // Build tree based on slug hierarchy (root is empty string)
-  return buildStoryCardTree(data.stories);
+  return buildStoryCardTree(stories);
 };
 
 // Flattens all stories to a unique set of story types
 export const fetchUniqueStoryTypes = async (useDraft: boolean): Promise<string[]> => {
   const storyblokApi = getStoryblokApi();
-  const { data } = await storyblokApi.get("cdn/stories", {
-    version: useDraft ? "draft" : "published",
-    per_page: 100,
-  });
+  const stories = await fetchAllStories(storyblokApi, useDraft);
   const types = new Set<string>();
   // Recursively collect all unique story types from all stories
   const collectTypes = (story: StoryblokStory) => {
@@ -132,6 +146,6 @@ export const fetchUniqueStoryTypes = async (useDraft: boolean): Promise<string[]
       story.content.columns.forEach(collectTypes);
     }
   };
-  data.stories.forEach(collectTypes);
+  stories.forEach(collectTypes);
   return Array.from(types);
 };
