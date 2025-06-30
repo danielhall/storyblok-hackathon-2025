@@ -1,12 +1,12 @@
 import { fetchStoryCardTree, StoryCard } from "./story-service";
-import { getComponents } from "./component-service";
+import { fetchComponents } from "./component-service";
 import { codenameToString } from "../utils/string-utils";
 
 export const computeSpaceIA = async (
   useDraft: boolean
 ): Promise<StoryCard[]> => {
   const storyCardTree = await fetchStoryCardTree(useDraft);
-  const componentMap = await getComponents();
+  const componentMap = await fetchComponents();
 
   // Recursively assign allowedBlocks to each story and its children
   function assignAllowedBlocks(story: StoryCard) {
