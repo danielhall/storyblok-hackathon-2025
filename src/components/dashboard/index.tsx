@@ -1,6 +1,6 @@
 'use client';
 
-import { fetchStoryCardTree } from '@/lib/services/story-service';
+import { computeSpaceIA } from '@/lib/services/ia-orchestration-service';
 import {
     Background,
     Controls,
@@ -9,9 +9,11 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { CustomNode, SmartTrunkEdge } from './components';
+import { draftMode } from 'next/headers';
 
+const { isEnabled } = await draftMode();
 
-const storyData = await fetchStoryCardTree();
+const storyData = await computeSpaceIA(isEnabled);
 const data = storyData[4];
 
 export function Dashboard() {
