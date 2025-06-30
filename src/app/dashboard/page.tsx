@@ -1,7 +1,7 @@
 import { fetchStoryCardTree, StoryCard } from '@/lib/storyblok/fetch-client';
 
 export default async function Dashboard() {
-	const storyData = await fetchStoryCardTree();
+	// const storyData = await fetchStoryCardTree();
 
 	return (
 		<div className="page">

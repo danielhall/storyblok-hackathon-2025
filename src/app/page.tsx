@@ -1,15 +1,19 @@
-import { getStoryblokApi } from '@/lib/storyblok';
-import { StoryblokStory } from '@storyblok/react/rsc';
+import { Dashboard } from '@/components/dashboard';
+import { fetchStoryCardTree } from '@/lib/storyblok/fetch-client';
 
 export default async function Home() {
-	const { data } = await fetchData();
+
+	const storyData = await fetchStoryCardTree();
+
+
 	return (
 		<div className="page">
-			<StoryblokStory story={data.story} />
+			<Dashboard storyData={storyData} />
 		</div>
 	);
 }
-export async function fetchData() {
-	const storyblokApi = getStoryblokApi();
-  return await storyblokApi.get(`cdn/stories/home`);
-}
+
+
+
+
+
