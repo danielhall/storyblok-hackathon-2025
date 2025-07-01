@@ -90,8 +90,8 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
                 <Tag noSpacing tag={data.storyType} />
             </div>
             {data.storyUrl ? (
-                <Link href={data.storyUrl} target="_blank" className="inline-flex justify-between items-center gap-1 mt-3 text-sm mt-auto">
-                    Go to Story <FiExternalLink style={{ fontSize: '0.7em', verticalAlign: 'middle' }} />
+                <Link href={data.storyUrl} target="_blank" className="inline-flex py-1 px-2 w-27 align-middle rounded-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-sm mt-auto">
+                    <FiExternalLink className="mt-[2px] mr-1" style={{ fontSize: '1em', verticalAlign: 'middle' }} /> Go to Story
                 </Link>
             ) : null}
             <Handle
