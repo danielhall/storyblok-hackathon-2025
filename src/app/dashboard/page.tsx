@@ -1,14 +1,10 @@
 
-import Tag from '@/components/tag';
+import { Dashboard } from '@/components/dashboard';
 
-export default async function Dashboard() {
+export default async function Page() {
 	return (
 		<div className="page">
-			<h1>Dashboard</h1>
-			<Tag tag="example-tag" />
-			<Tag tag="example-tag-2" />
-			<Tag tag="example-tag-2" />
-			<Tag tag="example-tag-3" />
+			<Dashboard/>
 		</div>
 	);
 }
