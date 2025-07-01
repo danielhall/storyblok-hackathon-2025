@@ -4,65 +4,74 @@ import { computeSpaceIA } from '@/lib/services/ia-orchestration-service';
 import {
     Background,
     Controls,
-    Edge,
     ReactFlow
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { CustomNode, SmartTrunkEdge } from './components';
 
 
-const storyData = await computeSpaceIA(true);
-const data = storyData[4];
 
-export function Dashboard() {
-    const datasets = storyData.map((data, xIndex) => {
-        const root = {
-            id: `${data.id}`,
-            data: { label: data.name, storyType: data.storyType },
-            position: { x: xIndex * 500, y: 0 },
-            type: 'custom'
-        }
+export const NODE_HEIGHT = 125;
+export const NODE_Y_SPACING = 25;
+
+
+const createNodes = (node: any, baseX: number, startY: number, depth: number = 0): { nodes: any[], nextY: number } => {
+    const hasChildren = node.children && node.children.length > 0;
     
-        const childs = data.children.map((child, idx) => ({
-            id: `${child.id}`,
-            data: { label: child.name, storyType: child.storyType },
-            position: { x: xIndex * 500 + 150, y: 100 * (idx + 1) },
-            type: 'custom',
-        }));
-
-        return [root, ...childs];
-    })
-
-    const nodes = datasets.flat();
-
-    const nodeTypes = {
-        custom: CustomNode,
-    };
-
-    const edgeTypes = {
-        smartTrunk: SmartTrunkEdge,
-    };
-
-
-    const trunkEndY = data.children.length > 0 ? 100 * data.children.length + 100 : 100;
-
-    const edges: Edge[] = data.children.map((child, idx) => ({
-        id: `${data.id}-${child.id}`,
-        source: `${data.id}`,
-        target: `${child.id}`,
-        type: 'smartTrunk',
-        data: {
-            isFirst: idx === 0,
-            isLast: idx === data.children.length - 1,
-            trunkEndY,
+    const currentNode = {
+        id: `${node.id}`,
+        data: { label: node.name, storyType: node.storyType },
+        position: { 
+            x: baseX + (depth * 75), 
+            y: startY * (NODE_HEIGHT + NODE_Y_SPACING)
         },
-    }));
+        type: 'custom'
+    };
+
+    if (!hasChildren) {
+        return { nodes: [currentNode], nextY: startY + 1 };
+    }
+
+    
+    let currentY = startY + 1;
+    const childNodes: any[] = [];
+    
+    for (const child of node.children) {
+        const result = createNodes(child, baseX, currentY, depth + 1);
+        childNodes.push(...result.nodes);
+        currentY = result.nextY;
+    } 
+
+    return { 
+        nodes: [currentNode, ...childNodes], 
+        nextY: currentY 
+    };
+};
+
+const nodeTypes = {
+    custom: CustomNode,
+};
+
+const edgeTypes = {
+    smartTrunk: SmartTrunkEdge,
+};
+
+const storyData = await fetchStoryCardTree();
+
+export function Dashboard() {    
+
+    const allNodes: any[] = [];
+    
+    storyData.forEach((rootStory, index) => {
+        const baseX = index * 500;
+        const result = createNodes(rootStory, baseX, 0, 0);
+        allNodes.push(...result.nodes);
+    });   
 
     return (
         <div style={{ height: '90dvh' }}>
             <ReactFlow 
-                nodes={nodes} 
-                edges={edges} 
+                nodes={allNodes} 
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 fitView
