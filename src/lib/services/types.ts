@@ -1,6 +1,5 @@
 export interface StoryblokComponentMap {
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   schema?: Record<string, any>;
 }
 
