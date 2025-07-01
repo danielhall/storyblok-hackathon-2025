@@ -87,7 +87,7 @@ export default function SitemapVisualiser({ isDraftMode }: RawDashboardProps) {
 
   return (
     <div className="page max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard – Raw Data</h1>
+      <h1 className="text-2xl font-bold mb-4">Redirects Visualiser</h1>
       <label className="block mb-2 font-semibold">Paste old sitemap.xml (optional for redirect suggestions):</label>
       <textarea
         className="w-full border rounded p-2 mb-4 min-h-[120px] font-mono"
