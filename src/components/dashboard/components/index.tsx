@@ -53,17 +53,22 @@ export function SmartTrunkEdge({
 
 export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
     return (
-        <div style={{
-            padding: '12px 16px',
-            borderRadius: '8px',
-            background: '#ffffff',
-            border: '2px solid #e2e8f0',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            minWidth: '120px',
-            maxWidth: '300px',
-            minHeight: NODE_HEIGHT,
-            overflow:'hidden'
-        }}>
+        <div
+            style={{
+                padding: '12px 16px',
+                borderRadius: '8px',
+                background: '#ffffff',
+                border: '2px solid #e2e8f0',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                minWidth: '120px',
+                maxWidth: '300px',
+                minHeight: NODE_HEIGHT,
+                overflow: 'hidden',
+                transition: 'background 0.15s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = '#f3f4f6')}
+            onMouseLeave={e => (e.currentTarget.style.background = '#ffffff')}
+        >
             <Handle
                 type="target"
                 position={Position.Left}
