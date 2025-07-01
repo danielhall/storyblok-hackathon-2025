@@ -13,6 +13,9 @@ export default async function Home() {
 			<Link href="/dashboard" className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
 				Go to Dashboard
 			</Link>
+			<Link href="/sitemap-visualiser" className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 mt-2 transition">
+				Go to Redirect Visualiser
+			</Link>
 		</div>
 	);
 }

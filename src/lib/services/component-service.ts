@@ -4,7 +4,10 @@ import { WhitelistMap } from './types';
 
 const storyblok = new StoryblokClient({ endpoint: 'https://mapi.storyblok.com/v1/' });
 
-export const fetchComponents = async (): Promise<WhitelistMap> => {
+// Use Next.js cache for this API call (works in app directory/server components)
+import { cache } from 'react';
+
+export const fetchComponents = cache(async (): Promise<WhitelistMap> => {
   try {
     const response = await storyblok.get(
       `spaces/${process.env.STORYBLOK_SPACE_ID}/components/`,
@@ -20,4 +23,4 @@ export const fetchComponents = async (): Promise<WhitelistMap> => {
     console.error(error);
     return {};
   }
-};
+});
