@@ -8,13 +8,14 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { CustomNode, SmartTrunkEdge } from './components';
+import { StoryCard } from '@/lib/services/story-service';
 
 export const NODE_HEIGHT = 125;
 export const NODE_Y_SPACING = 25;
 
-const createNodes = (node: any, baseX: number, startY: number, depth: number = 0): { nodes: any[], nextY: number } => {
+const createNodes = (node: StoryCard, baseX: number, startY: number, depth: number = 0): { nodes: any[], nextY: number } => {
     const hasChildren = node.children && node.children.length > 0;
-    
+
     const currentNode = {
         id: `${node.id}`,
         data: {

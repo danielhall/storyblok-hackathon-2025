@@ -13,7 +13,6 @@ const openai = new OpenAI({
  * @returns The newIA array, with each StoryCard having a `redirects` property (string[])
  */
 export async function suggestRedirectsFromSitemap(oldSitemapXml: string, newIA: StoryCard[]): Promise<StoryCard[]> {
-  console.log("API key:", process.env.OPENAI_API_KEY);
   // Flatten the IA to a list of new URLs and keep a reference to each StoryCard
   const urlToCard: Record<string, StoryCard> = {};
   function flattenIA(cards: StoryCard[], parentPath = ""): string[] {
@@ -37,9 +36,6 @@ export async function suggestRedirectsFromSitemap(oldSitemapXml: string, newIA: 
     max_tokens: 1200,
     temperature: 0.2,
   });
-
-  console.log("OpenAI Response:", response);
-  console.log("OpenAI Response:", response.choices[0]?.message);
 
   let redirectMap: Record<string, string[]> = {};
   try {
