@@ -8,7 +8,7 @@ interface RawDashboardProps {
   isDraftMode: boolean;
 }
 
-export default function RawDashboard({ isDraftMode }: RawDashboardProps) {
+export default function SitemapVisualiser({ isDraftMode }: RawDashboardProps) {
   const [sitemap, setSitemap] = useState('');
   const [dashboardData, setDashboardData] = useState<StoryCard[] | null>(null);
   const [loading, setLoading] = useState(false);
