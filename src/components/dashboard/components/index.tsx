@@ -2,6 +2,8 @@ import Tag from "@/components/tag";
 import { BaseEdge, EdgeProps, Handle, NodeProps, Position } from "@xyflow/react";
 import { NODE_HEIGHT } from "..";
 import { NodeData } from "../types";
+import Link from "next/link";
+import { FiExternalLink } from 'react-icons/fi';
 
 export function SmartTrunkEdge({
     sourceX,
@@ -48,9 +50,9 @@ export function SmartTrunkEdge({
     );
 }
 
-
-
 export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
+    console.log(data.storyUrl)
+    
     return (
         <div style={{
             padding: '12px 16px',
@@ -82,6 +84,12 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
             <div style={{ fontSize: '12px', color: '#666' }}>
                 <Tag tag={data.storyType} />
             </div>
+
+            {data.storyUrl ? (
+                <Link href={data.storyUrl} target="_blank" className="inline-flex items-center gap-1 mt-3 text-sm">
+                    Go to Story <FiExternalLink style={{ fontSize: '0.7em', verticalAlign: 'middle' }} />
+                </Link>
+            ) : null}
             
             <Handle
                 type="source"

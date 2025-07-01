@@ -17,7 +17,7 @@ const createNodes = (node: any, baseX: number, startY: number, depth: number = 0
     
     const currentNode = {
         id: `${node.id}`,
-        data: { label: node.name, storyType: node.storyType },
+        data: { label: node.name, storyType: node.storyType, storyUrl: node.storyUrl || null },
         position: { 
             x: baseX + (depth * 75), 
             y: startY * (NODE_HEIGHT + NODE_Y_SPACING)

@@ -6,5 +6,6 @@ export interface NodeData {
     data: {
         label: string;
         storyType: string;
+        storyUrl?: string | null;
     };
 }

@@ -8,6 +8,7 @@ export interface StoryCard {
   name: string;
   slug: string;
   storyType: string;
+  storyUrl?: string | null;
   storyTypeCodeName: string;
   allowedBlocks?: string[]; // Optional list of allowed blocks for this story
   children: StoryCard[];
@@ -20,6 +21,7 @@ interface StoryblokStory {
   slug?: string;
   full_slug?: string;
   storyType?: string;
+  storyUrl?: string | null;
   isFolder?: boolean;
   is_startpage?: boolean;
   content?: {
@@ -98,8 +100,11 @@ const buildStoryCardTree = (stories: StoryblokStory[]): StoryCard[] => {
       const storyTypeCodeName = isFolder
         ? "folder"
         : node.content?.component || "unknown";
+      const storyUrl = isFolder
+        ? null
+        : `https://app.storyblok.com/#/me/spaces/${process.env.STORYBLOK_SPACE_ID}/stories/0/0/${node.id}`;
       const children = buildTree(node.full_slug || node.slug || "");
-      return { id, name, slug, storyType, storyTypeCodeName, children };
+      return { id, name, slug, storyType, storyUrl, storyTypeCodeName, children };
     });
   };
 
