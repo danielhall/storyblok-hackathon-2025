@@ -7,5 +7,8 @@ export interface NodeData {
         label: string;
         storyType: string;
         storyUrl?: string | null;
-    };
+        allowedBlocks?: string[];
+    }
+    
+    
 }

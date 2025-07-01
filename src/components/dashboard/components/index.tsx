@@ -1,4 +1,5 @@
 import Tag from "@/components/tag";
+import { AllowedBlocksTooltip } from "./AllowedBlocksTooltip";
 import { BaseEdge, EdgeProps, Handle, NodeProps, Position } from "@xyflow/react";
 import { NODE_HEIGHT } from "..";
 import { NodeData } from "../types";
@@ -51,8 +52,6 @@ export function SmartTrunkEdge({
 }
 
 export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
-    console.log(data.storyUrl)
-    
     return (
         <div style={{
             padding: '12px 16px',
@@ -76,21 +75,18 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
                     height: '10px'
                 }}
             />
-            
-            <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', fontSize: '14px', fontWeight: 600, marginBottom: 4 }}>
                 {data.label}
+                <AllowedBlocksTooltip allowedBlocks={data.allowedBlocks ?? []} />
             </div>
-            
             <div style={{ fontSize: '12px', color: '#666' }}>
                 <Tag tag={data.storyType} />
             </div>
-
             {data.storyUrl ? (
                 <Link href={data.storyUrl} target="_blank" className="inline-flex items-center gap-1 mt-3 text-sm">
                     Go to Story <FiExternalLink style={{ fontSize: '0.7em', verticalAlign: 'middle' }} />
                 </Link>
             ) : null}
-            
             <Handle
                 type="source"
                 position={Position.Bottom}
