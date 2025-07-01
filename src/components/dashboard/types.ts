@@ -8,7 +8,5 @@ export interface NodeData {
         storyType: string;
         storyUrl?: string | null;
         allowedBlocks?: string[];
-    }
-    
-    
+    }      
 }

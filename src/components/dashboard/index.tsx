@@ -50,7 +50,7 @@ const createNodes = (node: StoryCard, baseX: number, startY: number, depth: numb
     };
 };
 
-const nodeTypes = {
+const nodeTypes:any = {
     custom: CustomNode,
 };
 
