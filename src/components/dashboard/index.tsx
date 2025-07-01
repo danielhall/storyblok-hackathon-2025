@@ -12,7 +12,6 @@ import { StoryCard } from '@/lib/services/story-service';
 export const NODE_HEIGHT = 125;
 export const NODE_Y_SPACING = 25;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createNodes = (node: StoryCard, baseX: number, startY: number, depth: number = 0): { nodes: any[], nextY: number } => {
     const hasChildren = node.children && node.children.length > 0;
 
@@ -37,7 +36,6 @@ const createNodes = (node: StoryCard, baseX: number, startY: number, depth: numb
 
     
     let currentY = startY + 1;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const childNodes: any[] = [];
     
     for (const child of node.children) {
