@@ -1,11 +1,9 @@
 import StoryblokClient from 'storyblok-js-client';
 import { extractComponentWhitelists } from '../utils/component-utils';
 import { WhitelistMap } from './types';
+import { cache } from 'react';
 
 const storyblok = new StoryblokClient({ endpoint: 'https://mapi.storyblok.com/v1/' });
-
-// Use Next.js cache for this API call (works in app directory/server components)
-import { cache } from 'react';
 
 export const fetchComponents = cache(async (): Promise<WhitelistMap> => {
   try {
