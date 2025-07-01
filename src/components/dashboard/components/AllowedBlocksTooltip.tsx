@@ -4,6 +4,10 @@ import Tag from "@/components/tag";
 import { FiInfo } from "react-icons/fi";
 
 export function AllowedBlocksTooltip({ allowedBlocks }: { allowedBlocks?: string[] }) {
+
+    if (!allowedBlocks || allowedBlocks.length === 0) {
+        return  null
+    }
     return (
         <Popover.Root>
         <Popover.Trigger asChild>

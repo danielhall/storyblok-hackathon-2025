@@ -58,7 +58,6 @@ const edgeTypes = {
     smartTrunk: SmartTrunkEdge,
 };
 
-// const storyData = await computeSpaceIA(true);
 
 export function Dashboard( {
     storyData
