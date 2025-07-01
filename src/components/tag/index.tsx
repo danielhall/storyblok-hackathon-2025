@@ -14,13 +14,14 @@ const pastelTagColourScale = d3.scaleOrdinal<string, string>()
 interface TagProps {
   tag: string;
   pastel?: boolean;
+  noSpacing?: boolean;
 }
 
-const Tag: React.FC<TagProps> = ({ tag, pastel }) => {
+const Tag: React.FC<TagProps> = ({ tag, pastel, noSpacing }) => {
   const backgroundColor = (pastel ?? false) ? pastelTagColourScale(tag) : tableauTagColourScale(tag);
 
   return (
-    <span style={{ backgroundColor, padding: '0.3em 0.6em', margin: '0.6em 0.3em', borderRadius: '0.25em', color: `${(pastel ?? false) ? "#000" : "#FFF"}` }}>
+    <span style={{ backgroundColor, padding: '0.3em 0.6em', margin: noSpacing ? '0em 0em' : '0.25em 0.3em', borderRadius: '0.25em', color: `${(pastel ?? false) ? "#000" : "#FFF"}` }}>
       {tag}
     </span>
   );

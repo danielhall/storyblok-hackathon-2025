@@ -56,11 +56,13 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
         <div
             style={{
                 padding: '12px 16px',
+                display: 'grid',
+                gridTemplateRows: 'min-content 1fr 1fr',
                 borderRadius: '8px',
                 background: '#ffffff',
                 border: '2px solid #e2e8f0',
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                minWidth: '120px',
+                width: '275px',
                 maxWidth: '300px',
                 minHeight: NODE_HEIGHT,
                 overflow: 'hidden',
@@ -80,15 +82,15 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
                     height: '10px'
                 }}
             />
-            <div style={{ display: 'flex', alignItems: 'center', fontSize: '14px', fontWeight: 600, marginBottom: 4 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '14px', fontWeight: 600, marginBottom: 4 }}>
                 {data.label}
                 <AllowedBlocksTooltip allowedBlocks={data.allowedBlocks ?? []} />
             </div>
             <div style={{ fontSize: '12px', color: '#666' }}>
-                <Tag tag={data.storyType} />
+                <Tag noSpacing tag={data.storyType} />
             </div>
             {data.storyUrl ? (
-                <Link href={data.storyUrl} target="_blank" className="inline-flex items-center gap-1 mt-3 text-sm">
+                <Link href={data.storyUrl} target="_blank" className="inline-flex justify-between items-center gap-1 mt-3 text-sm mt-auto">
                     Go to Story <FiExternalLink style={{ fontSize: '0.7em', verticalAlign: 'middle' }} />
                 </Link>
             ) : null}
