@@ -1,6 +1,5 @@
 'use client';
 
-import { computeSpaceIA } from '@/lib/services/ia-orchestration-service';
 import {
     Background,
     Controls,
@@ -59,9 +58,13 @@ const edgeTypes = {
     smartTrunk: SmartTrunkEdge,
 };
 
-const storyData = await computeSpaceIA(true);
+// const storyData = await computeSpaceIA(true);
 
-export function Dashboard() {    
+export function Dashboard( {
+    storyData
+}: {
+    storyData: StoryCard[]
+}) {    
 
     const allNodes: any[] = [];
     
