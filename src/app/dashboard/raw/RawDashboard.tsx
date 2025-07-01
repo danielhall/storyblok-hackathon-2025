@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { StoryCard } from '@/lib/services/types';
+import Tag from '@/components/tag';
 
 interface RawDashboardProps {
   isDraftMode: boolean;
@@ -43,6 +44,47 @@ export default function RawDashboard({ isDraftMode }: RawDashboardProps) {
     }
   }
 
+  function StoryCardList({ cards }: { cards: StoryCard[] }) {
+    if (!cards || cards.length === 0) return null;
+    return (
+      <ul className="space-y-4">
+        {cards.map(card => (
+          <li key={card.id} className="border rounded p-4 bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="font-bold text-lg">{card.name}</span>
+              <Tag tag={card.storyType} pastel={false} />
+            </div>
+            {card.allowedBlocks && card.allowedBlocks.length > 0 && (
+                <>
+                    <span className="font-bold text-md">Allowed Blocks</span>
+                    <div className="mb-2 flex flex-wrap gap-1">
+                        {card.allowedBlocks.map(block => (
+                            <Tag key={block} tag={block} pastel={true} />
+                        ))}
+                    </div>
+                </>
+            )}
+            {card.redirects && card.redirects.length > 0 && (
+              <div className="mb-2">
+                <span className="font-semibold">Redirects:</span>
+                <ul className="list-disc list-inside text-md my-5">
+                  {card.redirects.map(url => (
+                    <li key={url} className="break-all">{url}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {card.children && card.children.length > 0 && (
+              <div className="ml-4 border-l-2 border-gray-200 pl-4 mt-2">
+                <StoryCardList cards={card.children} />
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <div className="page max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Dashboard – Raw Data</h1>
@@ -61,11 +103,7 @@ export default function RawDashboard({ isDraftMode }: RawDashboardProps) {
         {loading ? 'Generating...' : 'Generate IA & Suggest Redirects'}
       </button>
       {error && <div className="text-red-600 mb-2">{error}</div>}
-      {dashboardData && (
-        <pre className="bg-gray-100 p-4 rounded overflow-x-auto text-xs">
-          {JSON.stringify(dashboardData, null, 2)}
-        </pre>
-      )}
+      {dashboardData && <StoryCardList cards={dashboardData} />}
     </div>
   );
 }
