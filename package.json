@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@dagrejs/dagre": "^1.1.5",
+    "@radix-ui/react-popover": "^1.1.14",
     "@storyblok/react": "^5.1.1",
     "@xyflow/react": "^12.8.1",
     "d3-scale": "^4.0.2",

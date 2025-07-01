@@ -1,8 +1,9 @@
 import Tag from "@/components/tag";
-import { BaseEdge, EdgeProps, Handle, NodeProps, Position, XYPosition } from "@xyflow/react";
+import { BaseEdge, EdgeProps, Handle, NodeProps, Position } from "@xyflow/react";
+import { NODE_HEIGHT } from "..";
+import { NodeData } from "../types";
 
 export function SmartTrunkEdge({
-    id,
     sourceX,
     sourceY,
     targetX,
@@ -47,14 +48,7 @@ export function SmartTrunkEdge({
     );
 }
 
-interface NodeData {
-    id: string;
-    position: XYPosition;
-    data: {
-        label: string;
-        storyType: string;
-    };
-}
+
 
 export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
     return (
@@ -65,7 +59,9 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
             border: '2px solid #e2e8f0',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
             minWidth: '120px',
-            textAlign: 'center'
+            maxWidth: '300px',
+            minHeight: NODE_HEIGHT,
+            overflow:'hidden'
         }}>
             <Handle
                 type="target"
@@ -84,8 +80,6 @@ export function CustomNode({ data, isConnectable }: NodeProps<NodeData>) {
             </div>
             
             <div style={{ fontSize: '12px', color: '#666' }}>
-                Custom Node {data.storyType}
-
                 <Tag tag={data.storyType} />
             </div>
             
